@@ -1,1 +1,8 @@
 node_modules/
+.env
+.DS_Store              # macOS system files
+.env.local             # sometimes used in dev
+.env.*.local           # for local overrides
+logs/
+npm-debug.log*
+dist/

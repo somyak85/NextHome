@@ -14,6 +14,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const port = 8080;
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 main()
