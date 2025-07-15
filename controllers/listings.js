@@ -29,8 +29,11 @@ const listingController = {
   },
 
   createListing: async (req, res, next) => {
+    let url = req.file.path;
+    let filename = req.file.filename;
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
+    newListing.image = { url, filename };
     await newListing.save();
     req.flash("success", "New Home added!");
     res.redirect("/listings");
@@ -39,14 +42,27 @@ const listingController = {
   editListing: async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
-    res.render("listings/edit", { listing });
+    if (!listing) {
+      req.flash("error", "listing you requested for doesn't exist");
+      return res.redirect("/listings");
+    }
+    let originalUrl = listing.image.url;
+    originalUrl = originalUrl.replace("/upload", "/upload/h_300,w_250");
+    res.render("listings/edit", { listing, originalUrl });
   },
 
   updateListing: async (req, res) => {
     let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, {
+    let listing = await Listing.findByIdAndUpdate(id, {
       ...req.body.listing,
     });
+
+    if (typeof req.file !== "undefined") {
+      let url = req.file.path;
+      let filename = req.file.filename;
+      listing.image = { url, filename };
+      await listing.save();
+    }
     req.flash("success", "Updated!");
     res.redirect(`/listings/${id}`);
   },

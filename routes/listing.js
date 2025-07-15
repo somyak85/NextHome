@@ -10,14 +10,12 @@ const listingController = require("../controllers/listings");
 router
   .route("/")
   .get(wrapAsync(listingController.index))
-  // .post(
-  //   validateListing,
-  //   isLoggedIn,
-  //   wrapAsync(listingController.createListing)
-  // );
-  .post(upload.single("listing[image]"), (req, res) => {
-    res.send(req.file);
-  });
+  .post(
+    isLoggedIn,
+    upload.single("listing[image]"),
+    validateListing,
+    wrapAsync(listingController.createListing)
+  );
 
 //NEW Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
@@ -25,7 +23,13 @@ router.get("/new", isLoggedIn, listingController.renderNewForm);
 router
   .route("/:id")
   .get(wrapAsync(listingController.showListing))
-  .put(isLoggedIn, isOwner, wrapAsync(listingController.updateListing))
+  .put(
+    isLoggedIn,
+    isOwner,
+    upload.single("listing[image]"),
+    validateListing,
+    wrapAsync(listingController.updateListing)
+  )
   .delete(isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
 
 //Edit route

@@ -48,10 +48,6 @@ const sessionOpts = {
   },
 };
 
-app.get("/", (req, res) => {
-  res.send("HII!! it's running fine");
-});
-
 app.use(session(sessionOpts));
 app.use(flash());
 

@@ -9,19 +9,10 @@ const listingSchema = new Schema({
   },
   description: String,
   image: {
-    filename: {
-      type: String,
-    },
-    url: {
-      type: String,
-      default:
-        "https://miro.medium.com/v2/resize:fit:1080/1*aIvXWeYVEajk9wl7PBlpqQ.jpeg",
-      set: (v) =>
-        v === ""
-          ? "https://miro.medium.com/v2/resize:fit:1080/1*aIvXWeYVEajk9wl7PBlpqQ.jpeg"
-          : v,
-    },
+    url: String,
+    filename: String,
   },
+
   price: Number,
   location: String,
   country: String,
