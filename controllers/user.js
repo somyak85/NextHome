@@ -1,3 +1,5 @@
+const User = require("../models/user");
+
 const userController = {
   signupform: (req, res) => {
     res.render("users/signup");

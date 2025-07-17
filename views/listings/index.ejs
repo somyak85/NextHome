@@ -21,9 +21,12 @@
   }
 
   .tax-info {
-    display: none;
+    display: inline;
   }
 
+  .originalInfo {
+    display: none;
+  }
   .tax-toggle {
     border: 1px solid rgb(68, 67, 67);
     border-radius: 0.3rem;
@@ -111,9 +114,11 @@
       <div class="card-img-overlay"></div>
       <div class="card-body">
         <p class="card-text"><b><%= listing.title %></b></p>
-        <p class="card-text">
+        <p class="card-text originalInfo">
           Price: &#8377;<%= listing.price %>/night
-          <i class="tax-info">+18% GST</i>
+        </p>
+        <p class="card-text tax-info">
+          Price: &#8377;<%= (listing.price * 1.18).toFixed(0) %>/night
         </p>
       </div>
     </div>
@@ -122,15 +127,17 @@
 </div>
 
 <script>
-  let taxSwitch = document.getElementById("switchCheckDefault");
-  taxSwitch.addEventListener("click", () => {
-    let taxInfo = document.getElementsByClassName("tax-info");
-    for (info of taxInfo) {
-      if (info.style.display != "inline") {
-        info.style.display = "inline";
-      } else {
-        info.style.display = "none";
-      }
+  const taxSwitch = document.getElementById("switchCheckDefault");
+
+  taxSwitch.addEventListener("change", () => {
+    const originalPrices = document.getElementsByClassName("originalInfo");
+    const taxPrices = document.getElementsByClassName("tax-info");
+
+    const showTax = taxSwitch.checked;
+
+    for (let i = 0; i < originalPrices.length; i++) {
+      taxPrices[i].style.display = showTax ? "none" : "inline";
+      originalPrices[i].style.display = showTax ? "inline" : "none";
     }
   });
 </script>
