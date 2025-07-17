@@ -9,6 +9,7 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/reviews.js");
 const UserRouter = require("./routes/user.js");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -18,7 +19,8 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const dburl = process.env.MONGODB_URL;
+
 main()
   .then(() => {
     console.log("connected to DB");
@@ -26,7 +28,7 @@ main()
   .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(dburl);
 }
 
 app.set("view engine", "ejs");
@@ -37,7 +39,20 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
+const store = MongoStore.create({
+  mongoUrl: dburl,
+  crypto: {
+    secret: "mysupersecretcode",
+  },
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", () => {
+  console.log("Error", err);
+});
+
 const sessionOpts = {
+  store,
   secret: "mysupersecretcode",
   resave: false,
   saveUninitialized: true,
