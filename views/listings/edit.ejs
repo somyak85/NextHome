@@ -35,6 +35,32 @@
         <div class="invalid-feedback">Description is required</div>
       </div>
 
+      <div class="mb-3">
+        <label for="options" class="form-label">Choose Category</label>
+        <select
+          name="listing[category]"
+          id="options"
+          class="form-control"
+          required
+        >
+          <option value=""><%=listing.category%></option>
+          <option value="Trending">Trending</option>
+          <option value="Rooms">Rooms</option>
+          <option value="Iconic cities">Iconic cities</option>
+          <option value="Beach">Beach</option>
+          <option value="Mountains">Mountains</option>
+          <option value="Forts">Forts</option>
+          <option value="Camping">Camping</option>
+          <option value="Farms">Farms</option>
+          <option value="Arctic">Arctic</option>
+          <option value="Domes">Domes</option>
+          <option value="Boats">Boats</option>
+          <option value="Amazing Pools">Amazing Pools</option>
+          <option value="Boats">Boats</option>
+        </select>
+        <div class="invalid-feedback">Category is required</div>
+      </div>
+
       <div class="mb-3 mt-3">
         Original image<br />
         <img src="<%= originalUrl %>" />

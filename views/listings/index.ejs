@@ -1,23 +1,94 @@
 <% layout('/layouts/boilerplate') %>
+
 <style>
-  #filters {
+  /* Base styling remains */
+  #filters-wrapper {
     margin-top: 1rem;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-wrap: wrap;
+  }
+
+  .tax-toggle {
+    border: 1px solid rgb(68, 67, 67);
+    border-radius: 0.3rem;
+    height: 2.5rem;
+    padding: 0.4rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .filter-scroll-wrapper {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    flex: 1;
+  }
+
+  .filter-scroll {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden; /* prevents vertical scroll */
+    scrollbar-width: none; /* for Firefox */
+    -ms-overflow-style: none; /* for IE and Edge */
+  }
+
+  .filter-scroll::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari */
   }
 
   .filter {
     text-align: center;
-    margin-right: 2rem;
+    min-width: 5rem;
+    margin-right: 1rem;
     opacity: 0.8;
+    transition: all 0.3s ease;
+    white-space: nowrap;
   }
+
   .filter:hover {
     opacity: 1;
     cursor: pointer;
   }
 
+  .filter.selected {
+    background-color: #f3f3f3;
+    border-radius: 0.5rem;
+    padding: 0.3rem 0.6rem;
+  }
+
   .filter p {
     font-size: 0.8rem;
+    margin-bottom: 0;
+  }
+
+  .filter-nav-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+  }
+
+  .filter-dropdown {
+    display: none;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .filter-scroll-wrapper,
+    .filter-scroll,
+    .filter-nav-btn {
+      display: none !important;
+    }
+
+    .filter-dropdown {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
   }
 
   .tax-info {
@@ -27,66 +98,119 @@
   .originalInfo {
     display: none;
   }
-  .tax-toggle {
-    border: 1px solid rgb(68, 67, 67);
-    border-radius: 0.3rem;
-    height: 2.5rem;
-    padding: 0.4rem;
-    margin-left: 3rem;
+
+  .listing-wrapper {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .listing {
+    transition: all 0.4s ease-in-out;
+  }
+
+  .highlighted {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+    opacity: 1 !important;
+    z-index: 10;
+  }
+
+  .dimmed {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  @keyframes fadeInMoveUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in {
+    animation: fadeInMoveUp 0.4s ease forwards;
   }
 </style>
 
-<div id="filters">
-  <div class="filter">
-    <div><i class="fa-solid fa-fire-flame-curved"></i></div>
-    <p>Trending</p>
+<div id="filters-wrapper">
+  <!-- Filter dropdown on small screens -->
+  <select id="filterDropdown" class="form-select filter-dropdown">
+    <option value="">Select Filter</option>
+    <option value="Clear">Clear Filter</option>
+    <option value="Rooms">Rooms</option>
+    <option value="Iconic cities">Iconic cities</option>
+    <option value="Beach">Beach</option>
+    <option value="Amazing Pools">Amazing Pools</option>
+    <option value="Mountains">Mountains</option>
+    <option value="Forts">Forts</option>
+    <option value="Camping">Camping</option>
+    <option value="Farms">Farms</option>
+    <option value="Arctic">Arctic</option>
+    <option value="Domes">Domes</option>
+    <option value="Boats">Boats</option>
+  </select>
+
+  <!-- Filter scroll buttons and icons -->
+  <div class="filter-scroll-wrapper">
+    <button class="filter-nav-btn" id="scrollLeftBtn">&lt;</button>
+    <div class="filter-scroll" id="filters">
+      <div class="filter" id="clearFilter">
+        <i class="fa-solid fa-xmark"></i>
+        <p>Clear</p>
+      </div>
+      <div class="filter" data-filter="Rooms">
+        <i class="fa-solid fa-bed"></i>
+        <p>Rooms</p>
+      </div>
+      <div class="filter" data-filter="Iconic cities">
+        <i class="fa-solid fa-city"></i>
+        <p>Iconic cities</p>
+      </div>
+      <div class="filter" data-filter="Beach">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <p>Beach</p>
+      </div>
+      <div class="filter" data-filter="Amazing Pools">
+        <i class="fa-solid fa-water-ladder"></i>
+        <p>Amazing Pools</p>
+      </div>
+      <div class="filter" data-filter="Mountains">
+        <i class="fa-solid fa-mountain-city"></i>
+        <p>Mountains</p>
+      </div>
+      <div class="filter" data-filter="Forts">
+        <i class="fa-brands fa-fort-awesome"></i>
+        <p>Forts</p>
+      </div>
+      <div class="filter" data-filter="Camping">
+        <i class="fa-solid fa-campground"></i>
+        <p>Camping</p>
+      </div>
+      <div class="filter" data-filter="Farms">
+        <i class="fa-solid fa-cow"></i>
+        <p>Farms</p>
+      </div>
+      <div class="filter" data-filter="Arctic">
+        <i class="fa-regular fa-snowflake"></i>
+        <p>Arctic</p>
+      </div>
+      <div class="filter" data-filter="Domes">
+        <i class="fa-solid fa-igloo"></i>
+        <p>Domes</p>
+      </div>
+      <div class="filter" data-filter="Boats">
+        <i class="fa-solid fa-sailboat"></i>
+        <p>Boats</p>
+      </div>
+    </div>
+    <button class="filter-nav-btn" id="scrollRightBtn">&gt;</button>
   </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-bed"></i></div>
-    <p>Rooms</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-city"></i></div>
-    <p>Iconic cities</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-umbrella-beach"></i></div>
-    <p>Beach</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-water-ladder"></i></div>
-    <p>Amazing Pools</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-mountain-city"></i></div>
-    <p>Mountains</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-brands fa-fort-awesome"></i></div>
-    <p>Forts</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-campground"></i></div>
-    <p>Camping</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-cow"></i></div>
-    <p>Farms</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-regular fa-snowflake"></i></div>
-    <p>Arctic</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-igloo"></i></div>
-    <p>Domes</p>
-  </div>
-  <div class="filter">
-    <div><i class="fa-solid fa-sailboat"></i></div>
-    <p>Boats</p>
-  </div>
+
+  <!-- Tax toggle on right -->
   <div class="tax-toggle">
     <div class="form-check-reverse form-switch">
       <input
@@ -96,48 +220,124 @@
         id="switchCheckDefault"
       />
       <label class="form-check-label" for="switchCheckDefault"
-        >Display total after taxes</label
+        >Display total before taxes</label
       >
     </div>
   </div>
-</div>
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
-  <% for (let listing of allListings) { %>
-  <a class="listing-links" href="/listings/<%= listing._id%>">
-    <div class="card col lsting-card card-t">
-      <img
-        src="<%= listing.image.url %>"
-        class="card-img-top"
-        alt="listing_image"
-        style="height: 20rem"
-      />
-      <div class="card-img-overlay"></div>
-      <div class="card-body">
-        <p class="card-text"><b><%= listing.title %></b></p>
-        <p class="card-text originalInfo">
-          Price: &#8377;<%= listing.price %>/night
-        </p>
-        <p class="card-text tax-info">
-          Price: &#8377;<%= (listing.price * 1.18).toFixed(0) %>/night
-        </p>
+
+  <!-- Listings -->
+  <div
+    id="listingContainer"
+    class="listing-wrapper row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3"
+  >
+    <% for (let listing of allListings) { %>
+    <a class="listing-links" href="/listings/<%= listing._id %>">
+      <div
+        class="card col lsting-card card-t listing"
+        data-category="<%= listing.category %>"
+      >
+        <img
+          src="<%= listing.image.url %>"
+          class="card-img-top"
+          alt="listing_image"
+          style="height: 20rem"
+        />
+        <div class="card-img-overlay"></div>
+        <div class="card-body">
+          <p class="card-text"><b><%= listing.title %></b></p>
+          <p class="card-text originalInfo">
+            Price: ₹<%= listing.price %>/night
+          </p>
+          <p class="card-text tax-info">
+            Price: ₹<%= (listing.price * 1.18).toFixed(0) %>/night
+          </p>
+        </div>
       </div>
-    </div>
-  </a>
-  <% } %>
-</div>
+    </a>
+    <% } %>
+  </div>
 
-<script>
-  const taxSwitch = document.getElementById("switchCheckDefault");
+  <script>
+    const taxSwitch = document.getElementById("switchCheckDefault");
+    const filters = document.querySelectorAll(".filter[data-filter]");
+    const clearFilterBtn = document.getElementById("clearFilter");
+    const listings = document.querySelectorAll(".listing");
+    const listingContainer = document.getElementById("listingContainer");
+    const allLinks = document.querySelectorAll(".listing-links");
+    const filterScroll = document.querySelector(".filter-scroll");
+    const dropdown = document.getElementById("filterDropdown");
 
-  taxSwitch.addEventListener("change", () => {
-    const originalPrices = document.getElementsByClassName("originalInfo");
-    const taxPrices = document.getElementsByClassName("tax-info");
+    const originalOrder = Array.from(allLinks);
 
-    const showTax = taxSwitch.checked;
+    taxSwitch.addEventListener("change", () => {
+      const originalPrices = document.getElementsByClassName("originalInfo");
+      const taxPrices = document.getElementsByClassName("tax-info");
+      const showTax = taxSwitch.checked;
 
-    for (let i = 0; i < originalPrices.length; i++) {
-      taxPrices[i].style.display = showTax ? "none" : "inline";
-      originalPrices[i].style.display = showTax ? "inline" : "none";
+      for (let i = 0; i < originalPrices.length; i++) {
+        taxPrices[i].style.display = showTax ? "none" : "inline";
+        originalPrices[i].style.display = showTax ? "inline" : "none";
+      }
+    });
+
+    filters.forEach((filter) => {
+      filter.addEventListener("click", () => {
+        handleFilter(filter.getAttribute("data-filter"));
+      });
+    });
+
+    clearFilterBtn.addEventListener("click", () => {
+      clearFilter();
+    });
+
+    dropdown.addEventListener("change", (e) => {
+      const value = e.target.value;
+      if (value === "Clear") clearFilter();
+      else handleFilter(value);
+    });
+
+    function handleFilter(selected) {
+      filters.forEach((f) => f.classList.remove("selected"));
+      filters.forEach((f) => {
+        if (f.getAttribute("data-filter") === selected)
+          f.classList.add("selected");
+      });
+
+      allLinks.forEach((wrapper) => {
+        const card = wrapper.querySelector(".listing");
+        const category = card.getAttribute("data-category");
+        if (category === selected) {
+          wrapper.classList.remove("dimmed");
+          wrapper.classList.add("fade-in");
+          listingContainer.prepend(wrapper);
+          card.classList.add("highlighted");
+        } else {
+          wrapper.classList.add("dimmed");
+          wrapper.classList.remove("fade-in");
+          card.classList.remove("highlighted");
+        }
+      });
     }
-  });
-</script>
+
+    function clearFilter() {
+      filters.forEach((f) => f.classList.remove("selected"));
+      dropdown.value = "";
+      allLinks.forEach((wrapper) => {
+        wrapper.classList.remove("dimmed", "fade-in");
+        const card = wrapper.querySelector(".listing");
+        card.classList.remove("highlighted");
+      });
+      originalOrder.forEach((node) => {
+        listingContainer.appendChild(node);
+      });
+    }
+
+    document.getElementById("scrollLeftBtn").addEventListener("click", () => {
+      filterScroll.scrollBy({ left: -200, behavior: "smooth" });
+    });
+
+    document.getElementById("scrollRightBtn").addEventListener("click", () => {
+      filterScroll.scrollBy({ left: 200, behavior: "smooth" });
+    });
+  </script>
+</div>
