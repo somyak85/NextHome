@@ -134,9 +134,19 @@
   .fade-in {
     animation: fadeInMoveUp 0.4s ease forwards;
   }
+
+  .sticky-filter {
+    position: sticky;
+    top: 3.5rem; /* adjust this if your navbar height is different */
+    z-index: 1000;
+    background-color: #fff;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
 </style>
 
-<div id="filters-wrapper">
+<div id="filters-wrapper" class="sticky-filter">
   <!-- Filter dropdown on small screens -->
   <select id="filterDropdown" class="form-select filter-dropdown">
     <option value="">Select Filter</option>
