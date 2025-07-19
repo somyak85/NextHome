@@ -28,6 +28,8 @@ module.exports.listingSchema = Joi.object({
       .valid(...categories)
       .required(),
   }).required(),
+
+  deleteImageFilenames: Joi.array().items(Joi.string()).optional(),
 });
 
 module.exports.reviewSchema = Joi.object({

@@ -37,13 +37,7 @@
 
       <div class="mb-3">
         <label for="options" class="form-label">Choose Category</label>
-        <select
-          name="listing[category]"
-          id="options"
-          class="form-control"
-          required
-        >
-          <option value=""><%=listing.category%></option>
+        <select name="listing[category]" id="options" class="form-control">
           <option value="Trending">Trending</option>
           <option value="Rooms">Rooms</option>
           <option value="Iconic cities">Iconic cities</option>
@@ -58,17 +52,66 @@
           <option value="Amazing Pools">Amazing Pools</option>
           <option value="Boats">Boats</option>
         </select>
-        <div class="invalid-feedback">Category is required</div>
-      </div>
-
-      <div class="mb-3 mt-3">
-        Original image<br />
-        <img src="<%= originalUrl %>" />
       </div>
 
       <div class="mb-3">
-        <lable for="image" class="form-label">Upload image </lable>
-        <input name="listing[image]" type="file" class="form-control" />
+        <p>Current Images:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px">
+          <% if (listing.images && listing.images.length > 0) { %> <%
+          listing.images.forEach(function(img, index) { %>
+          <div style="position: relative">
+            <img
+              src="<%= img.url %>"
+              alt="Current Listing Image <%= index + 1 %>"
+              style="
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+              "
+            />
+            <div
+              style="
+                position: absolute;
+                top: 0;
+                right: 0;
+                background-color: rgba(255, 255, 255, 0.7);
+                padding: 2px;
+                border-radius: 0 0 0 5px;
+              "
+            >
+              <input
+                type="checkbox"
+                id="deleteImage<%= index %>"
+                name="deleteImageFilenames[]"
+                value="<%= img.filename %>"
+              />
+              <label for="deleteImage<%= index %>" style="font-size: 0.8em"
+                >Delete</label
+              >
+            </div>
+          </div>
+          <% }); %> <% } else { %>
+          <p>No images currently associated with this listing.</p>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="images" class="form-label">Add More Images</label>
+        <input
+          name="listing[images]"
+          type="file"
+          class="form-control"
+          multiple
+          onchange="previewMultipleImages(event)"
+        />
+        <div
+          id="imagePreviews"
+          class="mt-2"
+          style="display: flex; flex-wrap: wrap; gap: 10px"
+        ></div>
       </div>
 
       <div class="row">
@@ -114,3 +157,29 @@
     </form>
   </div>
 </div>
+
+<script>
+  function previewMultipleImages(event) {
+    const previewContainer = document.getElementById("imagePreviews");
+    previewContainer.innerHTML = ""; // Clear existing previews from new selections
+
+    const files = event.target.files;
+
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.type.startsWith("image/")) {
+          const img = document.createElement("img");
+          img.src = URL.createObjectURL(file);
+          img.alt = `Preview ${i + 1}`;
+          img.style.width = "100px";
+          img.style.height = "100px";
+          img.style.objectFit = "cover";
+          img.style.border = "1px solid #ddd";
+          img.style.borderRadius = "4px";
+          previewContainer.appendChild(img);
+        }
+      }
+    }
+  }
+</script>

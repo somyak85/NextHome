@@ -1,99 +1,578 @@
 <% layout('/layouts/boilerplate') %>
-
-<!-- LISTING DETAILS -->
-<div class="row">
-  <div class="col-8 offset-3">
-  </div>
-  <div class="card listing-card col-6 offset-3 show-card">
-    <h5 class="mt-3"><b><%= listing.title %>,<%= listing.country%></b></h5>
-    <img
-      src="<%= listing.image.url%>"
-      class="card-img-top show-img mt-3"
-      alt="listing_image"
-    />
-    <div class="card-body">
-      <p class="card-text">
-        <p>Owned by <i><%= listing.owner.username %></i></p>
-        <p><%= listing.description%></p>
-        <p>&#8377;<%= listing.price.toLocaleString("en-IN") %></p>
-        <p><%= listing.location%></p>
-        <p><%= listing.category%></p>
-      </p>
-    </div>
-  </div>
-
-<% if(currUser && listing.owner.equals(currUser._id)) { %>
-<div class="btns mb-3">
-    <a href="/listings/<%= listing._id %>/edit" class = 'btn btn-dark col-1 offset-3 add-btn'>Edit</a>
-
-    <form method="POST" action="/listings/<%=listing._id %>?_method=DELETE">
-    <button class = 'btn btn-dark offset-5'>Delete</button>
-    </form>
-  </div>
-<% } %>
-
-<!-- REVIEW FORM -->
-  <div class="col-8 offset-3">
-    <hr>
-    <%  if(currUser) {%>
-    <h4>Leave a Review</h4>
-
-    <form action = "/listings/<%= listing._id %>/reviews" method = "POST" novalidate class = "needs-validation">
-
-
-      <div class = "mb-3 mt-3">
-                <label for = "rating" class = "form-label form-range">Rating</label>
-      <fieldset class="starability-slot">
-
-  <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
-  <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-  <label for="first-rate1" title="Terrible">1 star</label>
-  <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-  <label for="first-rate2" title="Not good">2 stars</label>
-  <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-  <label for="first-rate3" title="Average">3 stars</label>
-  <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-  <label for="first-rate4" title="Very good">4 stars</label>
-  <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-  <label for="first-rate5" title="Amazing">5 stars</label>
-</fieldset>
-</div>
-
-      <div class = "mb-3 mt-3">
-        <label for = "comment" class = "form-label">Comment</label>
-        <textarea type = "text" id = "comment" 
-        name = "review[comment]" rows = "3" cols = "30" class = "form-control" required></textarea>
-        <div class="invalid-feedback">Please fill in the field</div>
+<div class="listing-container">
+  <div class="mobile-and-tablet-view-elements">
+    <header class="page-header-airbnb">
+      <button class="icon-button-airbnb" onclick="history.back()">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <div class="header-actions-airbnb">
+        <button class="icon-button-airbnb">
+          <i class="fas fa-upload"></i>
+        </button>
+        <button class="icon-button-airbnb"><i class="fas fa-heart"></i></button>
       </div>
-      <br>
-      <button class = "btn btn-outline-dark">Submit</button>
-    </form>
-    <hr>
-    <% } %>
+    </header>
 
-<!-- SHOW ALL REVIEW FORM -->
-    <h4 class = "mb-3"><b>All Reviews</b></h4>
-    <div class="row">
-    <% for(let review of listing.reviews) { %>
-        <div class="card col-5 ms-3 mb-3 ">
-          <div class="card-body"></div>
-          <h6 class="card-title">@<%= review.author.username%></h6>
-          <p class="starability-result card-text" data-rating="<%= review.rating %>">
-          </p>
-          <p class = "card-text"><%= review.comment %></p>
+    <div class="hero-carousel-section">
+      <div
+        id="listingImageCarouselMobile"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <% if (listing.images && listing.images.length > 0) { %> <%
+          listing.images.forEach(function(img, index) { %>
+          <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+            <img
+              src="<%= img.url %>"
+              class="d-block w-100 show-img"
+              alt="Listing Image <%= index + 1 %>"
+            />
+          </div>
+          <% }); %> <% } else if (listing.image && listing.image.url) { %>
+          <div class="carousel-item active">
+            <img
+              src="<%= listing.image.url %>"
+              class="d-block w-100 show-img"
+              alt="Listing Image"
+            />
+          </div>
+          <% } else { %>
+          <div class="carousel-item active">
+            <img
+              src="https://via.placeholder.com/1000x600?text=No+Image+Available"
+              class="d-block w-100 show-img"
+              alt="No image available"
+            />
+          </div>
+          <% } %>
+        </div>
+        <% if (listing.images && listing.images.length > 1) { %>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#listingImageCarouselMobile"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#listingImageCarouselMobile"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+        <div class="image-pagination-airbnb">
+          <%= (listing.images ? listing.images.length : 1) %> / <%=
+          listing.images ? listing.images.length : 1 %>
+        </div>
+        <% } %>
+      </div>
+    </div>
 
-        <% if(currUser && review.author.equals(currUser._id)) {%>
-        <div>
-          <form class = "mb-3" method = "POST" action = "/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-          <button class = "btn btn-s btn-dark">Delete review</button>
+    <main class="content-card-airbnb">
+      <h1 class="listing-title-airbnb">
+        <%= listing.title %>, <%= listing.country %>
+      </h1>
+      <p class="listing-info-airbnb">
+        <%= listing.location %> • <%= listing.category %>
+      </p>
+
+      <div class="rating-section-airbnb">
+        <% if (listing.reviews && listing.reviews.length > 0) { %> <% let
+        totalRating = 0; for (let review of listing.reviews) { totalRating +=
+        review.rating; } let avgRating = (totalRating /
+        listing.reviews.length).toFixed(2); %>
+        <span class="rating-score-airbnb"><%= avgRating %></span>
+        <i class="fas fa-star rating-star-airbnb"></i>
+        <span class="rating-text-airbnb"
+          ><%= listing.reviews.length %> Reviews</span
+        >
+        <% } else { %>
+        <span class="rating-score-airbnb">New Listing</span>
+        <i class="far fa-star rating-star-airbnb"></i>
+        <span class="rating-text-airbnb">No reviews yet</span>
+        <% } %>
+        <span class="badge-airbnb guest-favorite-badge-airbnb"
+          >Guest favourite</span
+        >
+      </div>
+
+      <div class="host-info-airbnb">
+        <img
+          src="<%= listing.owner.avatarUrl || 'https://via.placeholder.com/40' %>"
+          alt="Host Avatar"
+          class="host-avatar"
+        />
+        <span class="host-text-airbnb"
+          >Owned by <i><%= listing.owner.username %></i></span
+        >
+      </div>
+
+      <div class="description-airbnb">
+        <p><%= listing.description %></p>
+      </div>
+
+      <div class="info-badges-airbnb">
+        <span class="badge-airbnb prices-inclusive-badge-airbnb"
+          >Prices include all fees</span
+        >
+        <span class="badge-airbnb rare-find-badge-airbnb">Rare find</span>
+      </div>
+
+      <% if(currUser && listing.owner.equals(currUser._id)) { %>
+      <div class="btns mb-3 mt-4">
+        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark"
+          >Edit</a
+        >
+        <form
+          method="POST"
+          action="/listings/<%=listing._id %>?_method=DELETE"
+          style="display: inline-block"
+        >
+          <button class="btn btn-dark">Delete</button>
+        </form>
+      </div>
+      <% } %>
+
+      <div class="review-section">
+        <hr />
+        <% if(currUser) {%>
+        <h4>Leave a Review</h4>
+        <form
+          action="/listings/<%= listing._id %>/reviews"
+          method="POST"
+          novalidate
+          class="needs-validation review-form"
+        >
+          <div class="mb-3 mt-3">
+            <label for="rating-mobile" class="form-label">Rating</label>
+            <fieldset class="starability-slot">
+              <input
+                type="radio"
+                id="no-rate-mobile"
+                class="input-no-rate"
+                name="review[rating]"
+                value="1"
+                checked
+                aria-label="No rating."
+              />
+              <input
+                type="radio"
+                id="first-rate1-mobile"
+                name="review[rating]"
+                value="1"
+              />
+              <label for="first-rate1-mobile" title="Terrible">1 star</label>
+              <input
+                type="radio"
+                id="first-rate2-mobile"
+                name="review[rating]"
+                value="2"
+              />
+              <label for="first-rate2-mobile" title="Not good">2 stars</label>
+              <input
+                type="radio"
+                id="first-rate3-mobile"
+                name="review[rating]"
+                value="3"
+              />
+              <label for="first-rate3-mobile" title="Average">3 stars</label>
+              <input
+                type="radio"
+                id="first-rate4-mobile"
+                name="review[rating]"
+                value="4"
+              />
+              <label for="first-rate4-mobile" title="Very good">4 stars</label>
+              <input
+                type="radio"
+                id="first-rate5-mobile"
+                name="review[rating]"
+                value="5"
+              />
+              <label for="first-rate5-mobile" title="Amazing">5 stars</label>
+            </fieldset>
+          </div>
+          <div class="mb-3 mt-3">
+            <label for="comment-mobile" class="form-label">Comment</label>
+            <textarea
+              id="comment-mobile"
+              name="review[comment]"
+              rows="3"
+              class="form-control"
+              required
+            ></textarea>
+            <div class="invalid-feedback">Please fill in the field</div>
+          </div>
+          <button class="btn btn-outline-dark">Submit</button>
+        </form>
+        <hr />
+        <% } %>
+
+        <h4 class="mb-3"><b>All Reviews</b></h4>
+        <div class="row">
+          <% if (listing.reviews && listing.reviews.length > 0) { %> <% for(let
+          review of listing.reviews) { %>
+          <div class="col-12 col-md-6 mb-3">
+            <div class="card review-card-airbnb">
+              <div class="card-body">
+                <h6 class="card-title">@<%= review.author.username %></h6>
+                <p
+                  class="starability-result card-text"
+                  data-rating="<%= review.rating %>"
+                ></p>
+                <p class="card-text"><%= review.comment %></p>
+                <% if(currUser && review.author.equals(currUser._id)) {%>
+                <form
+                  method="POST"
+                  action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                >
+                  <button class="btn btn-s btn-dark mt-2">Delete review</button>
+                </form>
+                <% } %>
+              </div>
+            </div>
+          </div>
+          <% } %> <% } else { %>
+          <p class="col-12 ms-3">No reviews yet. Be the first to leave one!</p>
+          <% } %>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bottom-bar-airbnb">
+      <div class="price-info-airbnb">
+        <span class="current-price-airbnb"
+          >₹<%= listing.price.toLocaleString("en-IN") %></span
+        >
+        <span class="stay-duration-airbnb">per night</span>
+      </div>
+      <button class="reserve-button-airbnb">Reserve</button>
+    </footer>
+  </div>
+
+  <div class="desktop-view-elements">
+    <div class="desktop-header-actions">
+      <button class="desktop-header-action-btn">
+        <i class="fas fa-share-alt"></i> Share
+      </button>
+      <button class="desktop-header-action-btn">
+        <i class="far fa-heart"></i> Save
+      </button>
+    </div>
+
+    <h1 class="listing-title-airbnb">
+      <%= listing.title %>, <%= listing.country %>
+    </h1>
+
+    <div class="listing-meta-desktop">
+      <% if (listing.reviews && listing.reviews.length > 0) { %> <% let
+      totalRating = 0; for (let review of listing.reviews) { totalRating +=
+      review.rating; } let avgRating = (totalRating /
+      listing.reviews.length).toFixed(2); %>
+      <i class="fas fa-star star-icon"></i>
+      <span class="rating-score"><%= avgRating %></span>
+      <span class="total-reviews">(<%= listing.reviews.length %> reviews)</span>
+      <% } else { %>
+      <i class="far fa-star star-icon"></i>
+      <span class="total-reviews">No reviews yet</span>
+      <% } %>
+      <span>&#xb7;</span>
+      <a href="#reviews-section">Show all reviews</a> <% /* Anchor link for
+      desktop reviews */ %>
+    </div>
+
+    <div class="hero-carousel-section">
+      <div
+        id="listingImageCarouselDesktop"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <% if (listing.images && listing.images.length > 0) { %> <%
+          listing.images.forEach(function(img, index) { %>
+          <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+            <img
+              src="<%= img.url %>"
+              class="d-block w-100 show-img"
+              alt="Listing Image <%= index + 1 %>"
+            />
+          </div>
+          <% }); %> <% } else if (listing.image && listing.image.url) { %>
+          <div class="carousel-item active">
+            <img
+              src="<%= listing.image.url %>"
+              class="d-block w-100 show-img"
+              alt="Listing Image"
+            />
+          </div>
+          <% } else { %>
+          <div class="carousel-item active">
+            <img
+              src="https://via.placeholder.com/1000x600?text=No+Image+Available"
+              class="d-block w-100 show-img"
+              alt="No image available"
+            />
+          </div>
+          <% } %>
+        </div>
+        <% if (listing.images && listing.images.length > 1) { %>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#listingImageCarouselDesktop"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#listingImageCarouselDesktop"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+        <div class="image-pagination-airbnb">
+          <%= (listing.images ? listing.images.length : 1) %> / <%=
+          listing.images ? listing.images.length : 1 %>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="main-content-layout-desktop">
+      <div class="left-content-area-desktop">
+        <h2 class="section-title-desktop">
+          Entire unit in <%= listing.location %>, <%= listing.country %>
+        </h2>
+        <p class="listing-info-airbnb">
+          <%= listing.location %> • <%= listing.category %>
+        </p>
+
+        <div class="host-info-airbnb">
+          <img
+            src="<%= listing.owner.avatarUrl || 'https://via.placeholder.com/56' %>"
+            alt="Host Avatar"
+            class="host-avatar"
+          />
+          <div>
+            <span class="host-text-airbnb"
+              >Owned by <%= listing.owner.username %></span
+            ><br />
+            <span class="host-type-desktop">Superhost</span>
+          </div>
+        </div>
+
+        <div class="description-airbnb">
+          <p><%= listing.description %></p>
+        </div>
+
+        <div class="info-badges-airbnb">
+          <span class="badge-airbnb prices-inclusive-badge-airbnb"
+            >Prices include all fees</span
+          >
+          <span class="badge-airbnb rare-find-badge-airbnb">Rare find</span>
+        </div>
+
+        <% if(currUser && listing.owner.equals(currUser._id)) { %>
+        <div class="listing-owner-actions-desktop">
+          <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark"
+            >Edit Listing</a
+          >
+          <form
+            method="POST"
+            action="/listings/<%=listing._id %>?_method=DELETE"
+          >
+            <button class="btn btn-dark">Delete Listing</button>
           </form>
         </div>
         <% } %>
+
+        <div class="review-section-desktop" id="reviews-section">
+          <hr />
+          <h4 class="mb-3">
+            Reviews (<%= listing.reviews ? listing.reviews.length : 0 %>)
+          </h4>
+          <% if(currUser) {%>
+          <h5 class="mt-4 mb-3">Leave a Review</h5>
+          <form
+            action="/listings/<%= listing._id %>/reviews"
+            method="POST"
+            novalidate
+            class="needs-validation review-form-desktop"
+          >
+            <div class="mb-3">
+              <label for="rating-desktop" class="form-label">Rating</label>
+              <fieldset class="starability-slot">
+                <input
+                  type="radio"
+                  id="no-rate-desktop"
+                  class="input-no-rate"
+                  name="review[rating]"
+                  value="1"
+                  checked
+                  aria-label="No rating."
+                />
+                <input
+                  type="radio"
+                  id="first-rate1-desktop"
+                  name="review[rating]"
+                  value="1"
+                />
+                <label for="first-rate1-desktop" title="Terrible">1 star</label>
+                <input
+                  type="radio"
+                  id="first-rate2-desktop"
+                  name="review[rating]"
+                  value="2"
+                />
+                <label for="first-rate2-desktop" title="Not good"
+                  >2 stars</label
+                >
+                <input
+                  type="radio"
+                  id="first-rate3-desktop"
+                  name="review[rating]"
+                  value="3"
+                />
+                <label for="first-rate3-desktop" title="Average">3 stars</label>
+                <input
+                  type="radio"
+                  id="first-rate4-desktop"
+                  name="review[rating]"
+                  value="4"
+                />
+                <label for="first-rate4-desktop" title="Very good"
+                  >4 stars</label
+                >
+                <input
+                  type="radio"
+                  id="first-rate5-desktop"
+                  name="review[rating]"
+                  value="5"
+                />
+                <label for="first-rate5-desktop" title="Amazing">5 stars</label>
+              </fieldset>
+            </div>
+            <div class="mb-3">
+              <label for="comment-desktop" class="form-label">Comment</label>
+              <textarea
+                id="comment-desktop"
+                name="review[comment]"
+                rows="3"
+                class="form-control"
+                required
+              ></textarea>
+              <div class="invalid-feedback">Please fill in the field</div>
+            </div>
+            <button class="btn btn-outline-dark">Submit Review</button>
+          </form>
+          <hr />
+          <% } %>
+
+          <div class="row">
+            <% if (listing.reviews && listing.reviews.length > 0) { %> <%
+            for(let review of listing.reviews) { %>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="card review-card-desktop">
+                <div class="card-body">
+                  <h6 class="card-title">@<%= review.author.username %></h6>
+                  <p
+                    class="starability-result card-text"
+                    data-rating="<%= review.rating %>"
+                  ></p>
+                  <p class="card-text"><%= review.comment %></p>
+                  <% if(currUser && review.author.equals(currUser._id)) {%>
+                  <form
+                    method="POST"
+                    action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                  >
+                    <button class="btn btn-sm btn-dark mt-2">
+                      Delete review
+                    </button>
+                  </form>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+            <% } %> <% } else { %>
+            <p class="col-12">No reviews yet. Be the first to leave one!</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="right-booking-widget-desktop">
+        <div class="booking-widget-header">
+          <div class="booking-price">
+            ₹<%= listing.price.toLocaleString("en-IN") %><span> / night</span>
+          </div>
+          <div class="booking-rating-info">
+            <% if (listing.reviews && listing.reviews.length > 0) { %>
+            <i class="fas fa-star star-icon"></i>
+            <span class="rating-score"><%= avgRating %></span>
+            <span>&#xb7;</span>
+            <a href="#reviews-section"><%= listing.reviews.length %> reviews</a>
+            <% } else { %>
+            <i class="far fa-star star-icon"></i>
+            <span>No reviews yet</span>
+            <% } %>
+          </div>
         </div>
 
-
-      <% } %>
+        <form action="#" method="POST">
+          <div class="booking-form-group">
+            <div class="booking-input-wrapper">
+              <label for="checkInDesktop" class="booking-input-label"
+                >Check-in</label
+              >
+              <input
+                type="text"
+                id="checkInDesktop"
+                class="booking-input"
+                placeholder="Add date"
+              />
+            </div>
+            <div class="booking-input-wrapper">
+              <label for="checkOutDesktop" class="booking-input-label"
+                >Check-out</label
+              >
+              <input
+                type="text"
+                id="checkOutDesktop"
+                class="booking-input"
+                placeholder="Add date"
+              />
+            </div>
+            <div class="booking-input-wrapper guests">
+              <div>
+                <label for="numGuestsDesktop" class="booking-input-label"
+                  >Guests</label
+                >
+                <select id="numGuestsDesktop" class="booking-input">
+                  <option value="1">1 guest</option>
+                  <option value="2">2 guests</option>
+                  <option value="3">3 guests</option>
+                  <option value="4">4 guests</option>
+                </select>
+              </div>
+              <i
+                class="fas fa-chevron-down"
+                style="font-size: 14px; color: #717171"
+              ></i>
+            </div>
+          </div>
+          <button type="submit" class="booking-button">Reserve</button>
+          <p class="prices-include-fees-widget">You won't be charged yet</p>
+        </form>
       </div>
+    </div>
   </div>
 </div>
-

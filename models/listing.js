@@ -8,7 +8,26 @@ const listingSchema = new Schema({
     required: true,
   },
   description: String,
+  images: [
+    // This will be an array of image objects
+    {
+      url: String,
+      filename: String,
+    },
+  ],
+  mainImage: {
+    // This will store the URL of the main image for display on index page
+    type: String,
+    default: function () {
+      // Default to the URL of the first image in the 'images' array if available
+      return this.images && this.images.length > 0 ? this.images[0].url : "";
+    },
+    // Alternatively, you could leave this null and set it explicitly in the controller.
+    // Making it a simple string for now, we'll derive it.
+  },
+
   image: {
+    // This field needs to be in your Mongoose schema *during* migration
     url: String,
     filename: String,
   },

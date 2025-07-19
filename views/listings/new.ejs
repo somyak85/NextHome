@@ -59,13 +59,20 @@
       </div>
 
       <div class="mb-3">
-        <lable for="image" class="form-label">Upload image</lable>
+        <label for="images" class="form-label">Upload Images</label>
         <input
-          name="listing[image]"
+          name="listing[images]"
           type="file"
           class="form-control"
+          multiple
           required
+          onchange="previewMultipleImages(event)"
         />
+        <div
+          id="imagePreviews"
+          class="mt-2"
+          style="display: flex; flex-wrap: wrap; gap: 10px"
+        ></div>
       </div>
 
       <div class="row">
@@ -111,3 +118,29 @@
     </form>
   </div>
 </div>
+
+<script>
+  function previewMultipleImages(event) {
+    const previewContainer = document.getElementById("imagePreviews");
+    previewContainer.innerHTML = ""; // Clear existing previews
+
+    const files = event.target.files;
+
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.type.startsWith("image/")) {
+          const img = document.createElement("img");
+          img.src = URL.createObjectURL(file);
+          img.alt = `Preview ${i + 1}`;
+          img.style.width = "100px";
+          img.style.height = "100px";
+          img.style.objectFit = "cover";
+          img.style.border = "1px solid #ddd";
+          img.style.borderRadius = "4px";
+          previewContainer.appendChild(img);
+        }
+      }
+    }
+  }
+</script>
