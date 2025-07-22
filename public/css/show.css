@@ -3,36 +3,35 @@
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
 />
 <style>
-
   body {
     margin: 0;
-    font-family: "Poppins", sans-serif; /* A more modern font like Airbnb */
-    background-color: #f0f0f0; /* Light background for the whole page */
+    font-family: "Poppins", sans-serif;
+    background-color: #f0f0f0;
     color: #333;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-x: hidden;
   }
 
-  /* Main container for the listing - this will be visible on mobile/tablet */
+  /* Listing Container */
   .listing-container {
     position: relative;
-    max-width: 900px; /* Adjust based on desired max width, Airbnb is often narrower */
-    margin: 0 auto; /* Center the container */
-    background-color: #fff; /* Main background, for content not overlapping image */
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #fff;
     min-height: 100vh;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05); /* Subtle shadow for the whole page */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
   }
 
-  /* --- Sticky Header (Fake it till you make it with positioning) --- */
+  /* Sticky Header */
   .page-header-airbnb {
-    position: absolute; /* Position over the image */
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px; /* Add horizontal padding */
-    z-index: 10; /* Ensure it's above the image */
+    padding: 15px 20px;
+    z-index: 10;
     background-color: rgba(0, 0, 0, 0.2);
   }
 
@@ -40,12 +39,12 @@
     background: none;
     border: none;
     color: white;
-    font-size: 22px; /* Slightly larger icons */
+    font-size: 22px;
     cursor: pointer;
     padding: 8px;
-    border-radius: 50%; /* Make them circular */
+    border-radius: 50%;
     transition: background-color 0.3s ease;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Make icons stand out on image */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   }
 
   .icon-button-airbnb:hover {
@@ -54,14 +53,14 @@
 
   .header-actions-airbnb {
     display: flex;
-    gap: 15px; /* Space between icons */
+    gap: 15px;
   }
 
-  /* --- Hero Image/Carousel Section (Mobile/Tablet) --- */
+  /* Hero Image/Carousel Section */
   .hero-carousel-section {
     position: relative;
     width: 100%;
-    height: 400px; /* Default height */
+    height: 400px;
     overflow: hidden;
   }
 
@@ -76,7 +75,6 @@
       height: 500px;
     }
   }
-  /* On mobile/tablet, the carousel takes full width of .listing-container */
 
   .show-img {
     width: 100%;
@@ -86,7 +84,7 @@
   }
 
   .carousel-item {
-    height: 100%; /* Ensure carousel items fill the section height */
+    height: 100%;
   }
 
   .image-pagination-airbnb {
@@ -103,17 +101,17 @@
 
   .carousel-control-prev,
   .carousel-control-next {
-    width: 40px; /* Make control buttons slightly smaller */
+    width: 40px;
     height: 40px;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
-    opacity: 1; /* Always visible controls */
+    opacity: 1;
   }
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
-    background-size: 60%; /* Adjust icon size */
+    background-size: 60%;
   }
   .carousel-control-prev {
     left: 15px;
@@ -122,22 +120,22 @@
     right: 15px;
   }
 
-  /* --- Main Content Card (Mobile/Tablet) --- */
+  /* Main Content Card */
   .content-card-airbnb {
     background-color: white;
-    border-top-left-radius: 25px; /* Rounded top-left corner */
-    border-top-right-radius: 25px; /* Rounded top-right corner */
-    padding: 25px 20px 100px; /* Increased bottom padding for fixed bar */
-    margin-top: -30px; /* Overlap the hero image */
-    position: relative; /* For z-index to work */
-    z-index: 5; /* Ensure it's above other elements but below header */
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow for the card */
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    padding: 25px 20px 100px;
+    margin-top: -30px;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
   }
 
-  /* --- Typography & Details (Mobile/Tablet) --- */
+  /* Typography & Details */
   .listing-title-airbnb {
-    font-size: 26px; /* Slightly smaller than previous example, common for Airbnb */
-    font-weight: 600; /* Semi-bold */
+    font-size: 26px;
+    font-weight: 600;
     margin-bottom: 8px;
     line-height: 1.2;
   }
@@ -152,7 +150,7 @@
     display: flex;
     align-items: center;
     margin-top: 15px;
-    gap: 8px; /* Space between elements */
+    gap: 8px;
   }
 
   .rating-score-airbnb {
@@ -162,8 +160,8 @@
   }
 
   .rating-star-airbnb {
-    color: #ffc107; /* Gold color for star */
-    font-size: 17px; /* Slightly larger star */
+    color: #ffc107;
+    font-size: 17px;
   }
 
   .rating-text-airbnb {
@@ -180,19 +178,19 @@
     font-weight: 600;
     margin-right: 8px;
     white-space: nowrap;
-    border: 1px solid; /* For the outline effect */
+    border: 1px solid;
   }
 
   .guest-favorite-badge-airbnb {
-    background-color: #fff8e1; /* Light gold background */
-    color: #ffc107; /* Gold text */
-    border-color: #ffecb3; /* Lighter gold border */
+    background-color: #fff8e1;
+    color: #ffc107;
+    border-color: #ffecb3;
   }
 
   .host-info-airbnb {
     margin-top: 25px;
     padding-top: 25px;
-    border-top: 1px solid #eee; /* Separator line */
+    border-top: 1px solid #eee;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -203,7 +201,7 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #f0f0f0; /* Placeholder if no image */
+    background-color: #f0f0f0;
   }
 
   .host-text-airbnb {
@@ -225,7 +223,7 @@
     margin-bottom: 15px;
   }
 
-  /* --- Pricing Info/Badges (for inside the content card if not in bottom bar) --- */
+  /* Pricing Info/Badges */
   .info-badges-airbnb {
     margin-top: 25px;
     padding-top: 25px;
@@ -233,33 +231,33 @@
   }
 
   .prices-inclusive-badge-airbnb {
-    background-color: #e8f5e9; /* Light green */
+    background-color: #e8f5e9;
     color: #4caf50;
     border-color: #c8e6c9;
   }
 
   .rare-find-badge-airbnb {
-    background-color: #e3f2fd; /* Light blue */
+    background-color: #e3f2fd;
     color: #2196f3;
     border-color: #bbdefb;
   }
 
-  /* --- Fixed Bottom Bar (Mobile/Tablet) --- */
+  /* Fixed Bottom Bar */
   .bottom-bar-airbnb {
-    position: fixed; /* Fix to the bottom of the viewport */
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
-    max-width: 900px; /* Match listing-container width */
-    margin: 0 auto; /* Center the bar if container is centered */
+    max-width: 900px;
+    margin: 0 auto;
     background-color: white;
     padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Shadow at the top of the bar */
-    z-index: 20; /* Ensure it's on top of everything */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 20;
   }
 
   .price-info-airbnb {
@@ -279,23 +277,23 @@
   }
 
   .reserve-button-airbnb {
-    background-color: #ff385c; /* Airbnb-like red */
+    background-color: #ff385c;
     color: white;
     font-size: 18px;
     font-weight: bold;
     padding: 15px 30px;
     border: none;
-    border-radius: 10px; /* Rounded corners for the button */
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    white-space: nowrap; /* Prevent button text from wrapping */
+    white-space: nowrap;
   }
 
   .reserve-button-airbnb:hover {
-    background-color: #e00040; /* Darker red on hover */
+    background-color: #e00040;
   }
 
-  /* --- Review Section Styling (Mobile/Tablet) --- */
+  /* Review Section */
   .review-section {
     margin-top: 30px;
     padding-top: 20px;
@@ -314,7 +312,6 @@
   }
 
   .starability-slot {
-    /* Assuming this is your star rating component */
     margin-top: 10px;
     margin-bottom: 20px;
   }
@@ -343,7 +340,6 @@
     margin-bottom: 8px;
   }
 
-  /* Adjust button styling in review section */
   .review-card-airbnb .btn-dark {
     background-color: #333;
     border-color: #333;
@@ -352,12 +348,11 @@
     border-radius: 8px;
   }
 
-  /* --- General Bootstrap Overrides/Adjustments --- */
+  /* General Bootstrap Overrides */
   .row {
-    margin: 0; /* Remove default Bootstrap row margins */
+    margin: 0;
   }
 
-  /* Remove default Bootstrap card styling for our custom card */
   .listing-card {
     border: none !important;
     background-color: transparent !important;
@@ -365,407 +360,394 @@
     margin: 0 !important;
   }
 
-  /* Hide Bootstrap's default button styling for our custom buttons */
   .btns .btn-dark {
     background-color: #333;
     border-color: #333;
     border-radius: 8px;
     font-weight: 500;
     padding: 10px 18px;
-    margin-right: 10px; /* Space between edit/delete */
+    margin-right: 10px;
   }
 
-  /* Responsive adjustments for overall layout */
+  /* Responsive Adjustments (Mobile/Tablet) */
   @media (max-width: 767.98px) {
     .content-card-airbnb {
-      padding: 20px 15px 100px; /* Adjust padding for smaller screens */
+      padding: 20px 15px 100px;
     }
     .bottom-bar-airbnb {
       padding: 12px 15px;
-      flex-direction: column; /* Stack price and button on small screens */
+      flex-direction: column;
       align-items: flex-start;
       gap: 10px;
     }
     .reserve-button-airbnb {
-      width: 100%; /* Make button full width on small screens */
+      width: 100%;
     }
     .listing-title-airbnb {
       font-size: 22px;
     }
     .rating-section-airbnb {
-      flex-wrap: wrap; /* Allow badges to wrap */
+      flex-wrap: wrap;
     }
   }
 
-
-  /* ---------------------------------------------------- */
-  /* --- DESKTOP SPECIFIC OVERRIDES (@media min-width) --- */
-  /* ---------------------------------------------------- */
-  @media (min-width: 992px) { /* Applies to large desktops and up */
-
+  /* Desktop Specific Overrides */
+  @media (min-width: 992px) {
     body {
-        background-color: #fff; /* Airbnb desktop typically has a white background */
+      background-color: #fff;
     }
 
     .listing-container {
-        /* On desktop, this container will now act as the main content wrapper, centered */
-        max-width: 1400px; /* Wider for desktop, adjust as needed */
-        margin: 0 auto;
-        padding: 0 40px 40px; /* Padding for the entire content area, no side shadow for container itself */
-        box-shadow: none; /* Remove box-shadow from the main container on desktop */
-        min-height: auto; /* Allow height to adapt to content */
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px 40px;
+      box-shadow: none;
+      min-height: auto;
     }
 
-    /* Hide Mobile/Tablet Specific Elements */
+    /* Mobile/Tablet Elements (Hide) */
     .mobile-and-tablet-view-elements {
-        display: none !important;
+      display: none !important;
     }
 
-    /* Show Desktop Specific Elements */
+    /* Desktop Elements (Show) */
     .desktop-view-elements {
-        display: block; /* Make the desktop content block visible */
-        width: 100%; /* Take full width of its parent */
+      display: block;
+      width: 100%;
     }
 
-
-    /* 1. Desktop Header Actions (Share/Save) */
+    /* Desktop Header Actions */
     .desktop-header-actions {
-        display: flex; /* Show the desktop header actions */
-        justify-content: flex-end; /* Align to the right */
-        gap: 20px;
-        padding-top: 20px; /* Space from top of page */
-        margin-bottom: 20px; /* Space before title */
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+      padding-top: 20px;
+      margin-bottom: 20px;
     }
 
     .desktop-header-action-btn {
-        background: none;
-        border: none;
-        font-size: 16px;
-        color: #222; /* Darker text for desktop */
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 500;
-        transition: color 0.2s ease;
+      background: none;
+      border: none;
+      font-size: 16px;
+      color: #222;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      transition: color 0.2s ease;
     }
 
     .desktop-header-action-btn:hover {
-        color: #000;
-        text-decoration: underline;
+      color: #000;
+      text-decoration: underline;
     }
 
     .desktop-header-action-btn i {
-        font-size: 18px;
+      font-size: 18px;
     }
 
-    /* 2. Listing Title (re-used class, new desktop styles) */
-    .listing-title-airbnb { /* Re-using the class that exists in both HTML blocks */
-        font-size: 32px; /* Larger title for desktop */
-        font-weight: 600;
-        margin-bottom: 10px;
-        color: #222; /* Darker text */
+    /* Listing Title */
+    .listing-title-airbnb {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #222;
     }
 
-    /* 3. Listing Meta Info (rating, location, reviews) - desktop version */
-    .listing-meta-desktop { /* This class is only in desktop HTML, so no conflict */
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 16px;
-        color: #717171; /* Airbnb's gray */
-        margin-bottom: 20px; /* Space before image carousel */
+    /* Listing Meta Info (Rating, Location, Reviews) */
+    .listing-meta-desktop {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      color: #717171;
+      margin-bottom: 20px;
     }
 
     .listing-meta-desktop .rating-score,
     .listing-meta-desktop .total-reviews {
-        font-weight: 600;
-        color: #222; /* Darker for emphasis */
+      font-weight: 600;
+      color: #222;
     }
 
     .listing-meta-desktop .star-icon {
-        color: #FF385C; /* Airbnb red star */
+      color: #ff385c;
     }
 
     .listing-meta-desktop a {
-        color: #717171;
-        text-decoration: underline;
-        margin-left: 5px; /* Space before reviews link */
+      color: #717171;
+      text-decoration: underline;
+      margin-left: 5px;
     }
 
-
-    /* 4. Hero Image/Carousel Section (Desktop - full width) */
-    .hero-carousel-section { /* Reusing the class from mobile */
-        height: 550px; /* Adjust height for desktop hero, or use vw/vh for more dynamic sizing */
-        border-radius: 12px; /* Rounded corners for the entire carousel area */
-        overflow: hidden; /* Ensures rounded corners apply */
-        margin-bottom: 40px; /* Space below carousel */
-        max-width: 100%; /* Take full width of its parent (.listing-container) */
-        margin-left: 0;
-        margin-right: 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Subtle shadow for the image block */
-        display: block; /* Ensure it's visible on desktop */
+    /* Hero Image/Carousel Section */
+    .hero-carousel-section {
+      height: 550px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 40px;
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      display: block;
     }
 
-    /* Ensure carousel controls and pagination are styled for this wider context */
     .carousel-control-prev,
     .carousel-control-next {
-        background-color: rgba(0, 0, 0, 0.4); /* Slightly lighter overlay */
-        width: 50px; /* Slightly larger controls for desktop */
-        height: 50px;
+      background-color: rgba(0, 0, 0, 0.4);
+      width: 50px;
+      height: 50px;
     }
     .image-pagination-airbnb {
-        background-color: rgba(0, 0, 0, 0.7); /* Slightly darker for better contrast */
+      background-color: rgba(0, 0, 0, 0.7);
     }
 
-
-    /* 5. Main Content Layout (Below the Carousel) */
+    /* Main Content Layout */
     .main-content-layout-desktop {
-        display: flex; /* Use flexbox for left/right columns */
-        justify-content: space-between;
-        gap: 80px; /* Larger gap between columns */
+      display: flex;
+      justify-content: space-between;
+      gap: 80px;
     }
 
     .left-content-area-desktop {
-        flex: 2; /* Takes more space, e.g., 2/3 of available space */
-        min-width: 0; /* Allow content to shrink if needed */
+      flex: 2;
+      min-width: 0;
     }
 
     .right-booking-widget-desktop {
-        flex: 1; /* Takes less space, e.g., 1/3 of available space */
-        min-width: 350px; /* Minimum width for the booking card to prevent it from collapsing too much */
-        border: 1px solid #ddd;
-        border-radius: 12px;
-        padding: 25px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.08); /* More prominent shadow for booking widget */
-        position: sticky; /* Make booking widget sticky on scroll */
-        top: 20px; /* Distance from top when sticky */
-        align-self: flex-start; /* Align to the top of the flex container */
-        height: fit-content; /* Only take height needed for content */
-        background-color: white; /* Ensure white background */
+      flex: 1;
+      min-width: 350px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      position: sticky;
+      top: 20px;
+      align-self: flex-start;
+      height: fit-content;
+      background-color: white;
     }
 
-
-    /* Content Sections inside left-content-area-desktop */
+    /* Content Sections (Left Column) */
     .section-title-desktop {
-        font-size: 22px;
-        font-weight: 600;
-        margin-bottom: 20px;
-        margin-top: 40px; /* Space above new sections like Host Info, Description */
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      margin-top: 40px;
     }
 
-    .host-info-airbnb { /* Re-using existing class, adjusting for desktop */
-        margin-bottom: 25px;
-        padding-bottom: 25px;
-        border-bottom: 1px solid #eee;
+    .host-info-airbnb {
+      margin-bottom: 25px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid #eee;
     }
-    .host-avatar { /* Re-using existing class, but larger on desktop */
-        width: 56px;
-        height: 56px;
+    .host-avatar {
+      width: 56px;
+      height: 56px;
     }
-    .host-text-airbnb { /* Re-using class, adjusting for desktop */
-        font-size: 18px;
-        font-weight: 600;
+    .host-text-airbnb {
+      font-size: 18px;
+      font-weight: 600;
     }
-    .host-type-desktop { /* New class for host type */
-        font-size: 15px;
-        color: #717171;
-    }
-
-
-    .description-airbnb { /* Re-using existing class */
-        padding-top: 0; /* Remove top padding if already set by border-top */
-    }
-    .description-airbnb p { /* Re-using existing class, just adjusting color */
-        color: #484848;
+    .host-type-desktop {
+      font-size: 15px;
+      color: #717171;
     }
 
+    .description-airbnb {
+      padding-top: 0;
+    }
+    .description-airbnb p {
+      color: #484848;
+    }
 
-    /* Booking Widget specific styling (only for .right-booking-widget-desktop) */
+    /* Booking Widget */
     .booking-widget-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
 
     .booking-price {
-        font-size: 24px;
-        font-weight: 600;
-        display: flex;
-        align-items: baseline;
-        gap: 5px;
-        color: #222;
+      font-size: 24px;
+      font-weight: 600;
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      color: #222;
     }
 
     .booking-price span {
-        font-size: 16px;
-        font-weight: 400;
-        color: #717171;
+      font-size: 16px;
+      font-weight: 400;
+      color: #717171;
     }
 
     .booking-rating-info {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 14px;
-        color: #717171;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+      color: #717171;
     }
 
     .booking-rating-info .star-icon {
-        color: #222; /* Black star for widget */
+      color: #222;
     }
 
     .booking-rating-info a {
-        text-decoration: underline;
-        color: #717171;
+      text-decoration: underline;
+      color: #717171;
     }
 
     .booking-form-group {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        overflow: hidden; /* For inner borders */
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
     }
 
     .booking-input {
-        padding: 12px 15px;
-        width: 100%;
-        border: none;
-        border-bottom: 1px solid #eee; /* Separator lines */
-        font-size: 16px;
-        color: #222;
-        outline: none; /* Remove blue outline on focus */
+      padding: 12px 15px;
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #eee;
+      font-size: 16px;
+      color: #222;
+      outline: none;
     }
 
     .booking-input:last-child {
-        border-bottom: none;
+      border-bottom: none;
     }
 
     .booking-input-label {
-        font-size: 12px;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: #717171;
-        display: block;
-        margin-bottom: 2px;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #717171;
+      display: block;
+      margin-bottom: 2px;
     }
 
     .booking-input-wrapper {
-        padding: 10px 15px;
+      padding: 10px 15px;
     }
     .booking-input-wrapper.guests {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .booking-input-wrapper.guests select {
-        border: none;
-        outline: none;
-        font-size: 16px;
-        background: transparent;
-        appearance: none; /* Remove default select arrow */
-        padding-right: 20px; /* Space for custom arrow */
+      border: none;
+      outline: none;
+      font-size: 16px;
+      background: transparent;
+      appearance: none;
+      padding-right: 20px;
     }
 
     .booking-button {
-        width: 100%;
-        background-color: #FF385C; /* Airbnb red */
-        color: white;
-        padding: 18px 25px;
-        border: none;
-        border-radius: 8px;
-        font-size: 18px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
+      width: 100%;
+      background-color: #ff385c;
+      color: white;
+      padding: 18px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
     }
 
     .booking-button:hover {
-        background-color: #E00040;
+      background-color: #e00040;
     }
 
-    .prices-include-fees-widget { /* Different class to distinguish from mobile badge */
-        text-align: center;
-        font-size: 14px;
-        color: #717171;
-        margin-top: 15px;
+    .prices-include-fees-widget {
+      text-align: center;
+      font-size: 14px;
+      color: #717171;
+      margin-top: 15px;
     }
 
-    /* Edit/Delete buttons for listing owner (Desktop) */
+    /* Listing Owner Actions (Desktop) */
     .listing-owner-actions-desktop {
-        margin-top: 30px;
-        display: flex;
-        gap: 15px;
+      margin-top: 30px;
+      display: flex;
+      gap: 15px;
     }
     .listing-owner-actions-desktop .btn-dark {
-        background-color: #222;
-        border-color: #222;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-weight: 500;
-        transition: background-color 0.2s ease;
+      background-color: #222;
+      border-color: #222;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: background-color 0.2s ease;
     }
     .listing-owner-actions-desktop .btn-dark:hover {
-        background-color: #000;
+      background-color: #000;
     }
 
-    /* Review Section Styling (Desktop) */
+    /* Review Section (Desktop) */
     .review-section-desktop {
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
     }
     .review-section-desktop h4 {
-        font-size: 24px;
-        font-weight: 600;
-        margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 20px;
     }
     .review-form-desktop label {
-        font-weight: 500;
-        color: #333;
+      font-weight: 500;
+      color: #333;
     }
     .review-card-desktop {
-        background-color: #fcfcfc;
-        border: 1px solid #eee;
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 15px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      background-color: #fcfcfc;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
     }
     .review-card-desktop .card-title {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 5px;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 5px;
     }
     .review-card-desktop .card-text {
-        font-size: 16px;
-        color: #555;
+      font-size: 16px;
+      color: #555;
     }
     .review-card-desktop .starability-result {
-        margin-bottom: 8px;
+      margin-bottom: 8px;
     }
     .review-card-desktop .btn-dark {
-        background-color: #333;
-        border-color: #333;
-        font-size: 14px;
-        padding: 6px 12px;
-        border-radius: 8px;
+      background-color: #333;
+      border-color: #333;
+      font-size: 14px;
+      padding: 6px 12px;
+      border-radius: 8px;
     }
 
-
-    /* Optional: Fine-tune for larger desktops */
+    /* Larger Desktops */
     @media (min-width: 1200px) {
-        .listing-container {
-            max-width: 1000px; /* Even wider on very large screens */
-        }
-        .hero-carousel-section {
-            height: 600px; /* Taller carousel on very large screens */
-        }
-        .main-content-layout-desktop {
-            gap: 100px; /* Larger gap */
-        }
+      .listing-container {
+        max-width: 1000px;
+      }
+      .hero-carousel-section {
+        height: 600px;
+      }
+      .main-content-layout-desktop {
+        gap: 100px;
+      }
     }
+  }
 </style>

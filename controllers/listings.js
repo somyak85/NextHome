@@ -24,8 +24,17 @@ const listingController = {
       req.flash("error", "The Home you're trying to access has been removed");
       return res.redirect("/listings");
     }
+    let avgRating = 0;
+    if (listing.reviews && listing.reviews.length > 0) {
+      const totalRating = listing.reviews.reduce(
+        (sum, review) => sum + review.rating,
+        0
+      );
+      avgRating = (totalRating / listing.reviews.length).toFixed(1);
+    }
+
     // console.log(listing);
-    res.render("listings/show", { listing });
+    res.render("listings/show", { listing, avgRating });
   },
 
   createListing: async (req, res, next) => {
