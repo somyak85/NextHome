@@ -18,7 +18,7 @@ const User = require("./models/user.js");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-const port = process.nextTick.port || 8080;
+const port = process.env.port || 8080;
 
 const dburl = process.env.MONGODB_URL;
 
@@ -84,6 +84,10 @@ app.use("/listings/search", searchRoutes);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", UserRouter);
+
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
 
 //Error handling, middlewares
 app.use((req, res, next) => {
