@@ -15,10 +15,10 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
-const port = 8080;
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
+const port = process.nextTick.port || 8080;
 
 const dburl = process.env.MONGODB_URL;
 
